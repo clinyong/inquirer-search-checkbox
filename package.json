@@ -1,0 +1,24 @@
+{
+  "name": "inquirer-search-checkbox",
+  "version": "0.1.0",
+  "description": "Searchable Inquirer checkbox",
+  "main": "dist/index.js",
+  "scripts": {
+    "start": "tsc -w",
+    "build": "tsc"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/figures": "^2.0.0",
+    "@types/inquirer": "^0.0.35",
+    "@types/node": "^8.0.47",
+    "typescript": "^2.5.3"
+  },
+  "dependencies": {
+    "inquirer": "^3.3.0",
+    "chalk": "^2.3.0",
+    "figures": "^2.0.0"
+  }
+}
