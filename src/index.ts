@@ -101,7 +101,7 @@ class SearchBox extends Base {
 
 	filterChoices() {
 		this.filterList = this.choices.filter(c =>
-			c.name.toLocaleLowerCase().includes(this.rl.line.toLocaleLowerCase())
+			this.rl.line.toLowerCase().split("").every(letter => c.name.toLowerCase().includes(letter))
 		);
 	}
 
