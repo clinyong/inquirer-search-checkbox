@@ -3,6 +3,7 @@ import observe = require("inquirer/lib/utils/events");
 import figures = require("figures");
 import Paginator = require("inquirer/lib/utils/paginator");
 import chalk from "chalk";
+import fuzzy from "fuzzy";
 
 interface Event {
 	key: {
@@ -75,9 +76,7 @@ class SearchBox extends Base {
 		// Render question
 		var message = this.getQuestion();
 		var bottomContent = "";
-		var input = "";
 		const tip = chalk.dim("(Press <space> to select, <enter> to submit.)");
-		input = this.rl.line; // remove space
 
 		// Render choices or answer depending on the state
 		if (this.status === "answered") {
@@ -100,9 +99,11 @@ class SearchBox extends Base {
 	}
 
 	filterChoices() {
-		this.filterList = this.choices.filter(c =>
-			this.rl.line.toLowerCase().split("").every(letter => c.name.toLowerCase().includes(letter))
-		);
+		const options = {
+			extract: (el: Choice) => el.name
+		};
+
+		this.filterList = fuzzy.filter(this.rl.line, this.choices, options).map(el => el.original);
 	}
 
 	toggleChoice(index: number) {
