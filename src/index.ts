@@ -3,7 +3,7 @@ import observe = require("inquirer/lib/utils/events");
 import figures = require("figures");
 import Paginator = require("inquirer/lib/utils/paginator");
 import chalk from "chalk";
-import fuzzy from "fuzzy";
+import * as fuzzy from "fuzzy";
 
 interface Event {
 	key: {
