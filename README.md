@@ -1,6 +1,6 @@
 ## inquirer-search-checkbox
 
-![](https://media.giphy.com/media/26n7awggUO1waqUW4/giphy.gif)
+![](https://media.giphy.com/media/9J5iAXtcDX237jwBML/giphy.gif)
 
 ### Install
 
