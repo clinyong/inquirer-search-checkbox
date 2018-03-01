@@ -29,18 +29,32 @@ function isSeparator(c: Base.Choice) {
 }
 
 function renderChoices(choices: Choice[], pointer: number) {
+
 	var output = "";
 
 	choices.forEach(function(choice, i) {
+
 		if (choice.disabled) {
+
 			output = `${output} - ${choice.name} (Disabled)`;
+
 		} else {
-			var isSelected = i === pointer;
-			output += isSelected ? chalk.cyan(figures.pointer) : " ";
-			output += getCheckbox(choice.checked) + " " + choice.name;
+
+			var choiceOutput = " " + getCheckbox(choice.checked) + " " + choice.name;
+
+			// Is the pointer on the current choice
+			if (i === pointer) {
+				choiceOutput = chalk.cyan(figures.pointer + choiceOutput);
+			} else {
+				choiceOutput = " " + choiceOutput;
+			}
+
+			output += choiceOutput;
+
 		}
 
 		output += "\n";
+
 	});
 
 	return output.replace(/\n$/, "");
