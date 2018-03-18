@@ -1,6 +1,6 @@
 ## inquirer-search-checkbox
 
-![](screenshot.gif)
+![](screenshot.png)
 
 ### Install
 
