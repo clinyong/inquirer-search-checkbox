@@ -29,18 +29,32 @@ function isSeparator(c: Base.Choice) {
 }
 
 function renderChoices(choices: Choice[], pointer: number) {
+
 	var output = "";
 
 	choices.forEach(function(choice, i) {
+
 		if (choice.disabled) {
+
 			output = `${output} - ${choice.name} (Disabled)`;
+
 		} else {
-			var isSelected = i === pointer;
-			output += isSelected ? chalk.cyan(figures.pointer) : " ";
-			output += getCheckbox(choice.checked) + " " + choice.name;
+
+			var choiceOutput = " " + getCheckbox(choice.checked) + " " + choice.name;
+
+			// Is the pointer on the current choice
+			if (i === pointer) {
+				choiceOutput = chalk.cyan(figures.pointer + choiceOutput);
+			} else {
+				choiceOutput = " " + choiceOutput;
+			}
+
+			output += choiceOutput;
+
 		}
 
 		output += "\n";
+
 	});
 
 	return output.replace(/\n$/, "");
@@ -78,17 +92,40 @@ class SearchBox extends Base {
 		var bottomContent = "";
 		const tip = chalk.dim("(Press <space> to select, <enter> to submit.)");
 
-		// Render choices or answer depending on the state
+		// Answered
 		if (this.status === "answered") {
+
 			message += chalk.cyan(this.selection.join(", "));
-		} else {
-			message += `${tip} ${this.rl.line}`;
+
+		// There are matched choices
+		} else if (this.filterList.length) {
+
+			// The user entered a search filter
+			if (this.rl.line.length) {
+
+				message += `${this.rl.line}`;
+
+			// No searching filter
+			} else {
+
+				message += `${tip} ${this.rl.line}`;
+
+			}
+
 			const choicesStr = renderChoices(this.filterList, this.pointer);
+
 			bottomContent = this.paginator.paginate(
 				choicesStr,
 				this.pointer,
 				this.opt.pageSize
 			);
+
+		// There aren't any matched choices
+		} else {
+
+			message += this.rl.line;
+			bottomContent = '  ' + chalk.yellow('No results...');
+
 		}
 
 		if (error) {
